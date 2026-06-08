@@ -33,6 +33,7 @@
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    html, body { overflow-x: hidden; max-width: 100%; }
 
     body {
       margin: 0;
@@ -201,7 +202,7 @@
       width: 100%;
       padding: 12px 14px;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 16px; /* 16px+ stops iOS Safari from zooming in on focus */
       color: var(--maroon);
       background: var(--white);
       border: 1px solid #e3d9c4;
@@ -327,7 +328,7 @@
       min-width: 0;
       padding: 12px 14px;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 16px; /* 16px+ stops iOS Safari from zooming in on focus */
       color: var(--maroon);
       background: var(--white);
       border: 1px solid #e3d9c4;
