@@ -17,22 +17,20 @@ function doPost(e) {
     if (sheet.getLastRow() === 0) {
       sheet.appendRow([
         "Timestamp",
-        "Full Name",
-        "Email",
-        "Attending?",
-        "Number of Guests",
-        "Additional Guests"
+        "Attending",
+        "Party Size",
+        "Name(s)",
+        "Email"
       ]);
     }
 
     var p = e.parameter;
     sheet.appendRow([
       new Date(),
-      p.fullName || "",
-      p.email || "",
       p.attending || "",
-      p.guests || "",
-      p.additionalGuests || ""
+      p.partySize || "",
+      p.names || "",
+      p.email || ""
     ]);
 
     return ContentService
