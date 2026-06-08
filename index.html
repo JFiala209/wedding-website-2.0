@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sára &amp; James — Save the Date</title>
-  <meta name="description" content="You're invited to celebrate the wedding of Sára &amp; James — 22 August 2026, Guelph, Canada." />
+  <title>Sára &amp; James</title>
+  <meta name="description" content="Sára &amp; James" />
+  <meta name="robots" content="noindex, nofollow" />
 
   <style>
     /* Geist font (variable — one file covers every weight) */
@@ -304,6 +305,50 @@
     .form-status.ok  { background: #eef7ec; color: #1f5132; }
     .form-status.err { background: #fbeaea; color: #8a1f1f; }
 
+    /* ---------- Password gate ---------- */
+    .gate-box {
+      width: min(92vw, 440px);
+      margin: 0 auto;
+    }
+    .gate-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .gate-row {
+      display: flex;
+      gap: 10px;
+    }
+    #gate-pw {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--maroon);
+      background: var(--white);
+      border: 1px solid #e3d9c4;
+      border-radius: 6px;
+      outline: none;
+    }
+    #gate-pw:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(255,209,95,0.35);
+    }
+    .gate-btn {
+      width: auto;
+      padding: 12px 24px;
+      white-space: nowrap;
+    }
+    .gate-error {
+      margin: 14px 0 0;
+      font-size: 14px;
+      color: #8a1f1f;
+    }
+
     /* ---------- Mobile ---------- */
     @media (max-width: 760px) {
       .details { grid-template-columns: 1fr; gap: 32px; }
@@ -315,132 +360,97 @@
   </style>
 </head>
 <body>
-  <main class="wrap">
-
-    <!-- Hero -->
+  <!-- PUBLIC LANDING GATE — the only thing visible without the password -->
+  <div id="gate" class="wrap">
     <header class="hero">
       <img src="images/heart.png" alt="Sára and James" />
-      <p class="invite">
-        Are delighted to invite you to celebrate their wedding<br />
-        22 August 2026 at 17 Amalia Crescent, Guelph, Canada<br />
-        1:30pm arrival — Ceremony at 2pm — Reception to follow
-      </p>
-      <a class="scroll-hint" href="#save-the-date" aria-label="Scroll down">
-        <span>Scroll</span>
-        <span class="arrow">&#8595;</span>
-      </a>
-    </header>
-
-    <h1 class="save-the-date" id="save-the-date">SAVE THE DATE</h1>
-
-    <!-- Details -->
-    <div class="details">
-      <div class="celebration">
-        <h3>The celebration will take place</h3>
-        <p>on Saturday, August 22nd 2026 at 14:00</p>
-        <p>at Fiala's House - 17 Amalia Cres, Guelph ON</p>
-        <div class="map">
-          <iframe
-            title="Map to 17 Amalia Crescent, Guelph ON"
-            src="https://maps.google.com/maps?q=17%20Amalia%20Crescent%2C%20Guelph%2C%20ON%2C%20Canada&output=embed"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <form id="gate-form" class="gate-box" autocomplete="off">
+        <label class="gate-label" for="gate-pw">Please enter the password from your invitation</label>
+        <div class="gate-row">
+          <input type="password" id="gate-pw" autocomplete="off" autocapitalize="off"
+                 autocorrect="off" spellcheck="false" aria-describedby="gate-error" />
+          <button type="submit" class="btn gate-btn">Unlock</button>
         </div>
-      </div>
-
-      <div class="info-box">
-        <section>
-          <h4>Dress Code</h4>
-          <p>nothing specific, go with whatever makes you comfortable considering the weather &amp; terrain = garden!</p>
-        </section>
-        <section>
-          <h4>Parking</h4>
-          <p>we recommend taking an uber or taxi, if possible, however there will be a limited parking on the street if needed.</p>
-        </section>
-        <section>
-          <h4>Food &amp; Drinks</h4>
-          <p>there will be plenty to choose from, including GF, vege, alc-nonalc, so come hungry and thirsty!</p>
-        </section>
-        <section>
-          <h4>Timeline</h4>
-          <p>please arrive at least around 1:30 PM as ceremony will start at 2:00 PM. Afterwards there will be a reception (food &amp; drinks) &amp; at the right time - afterparty!</p>
-        </section>
-      </div>
-    </div>
-
-    <!-- RSVP -->
-    <section class="rsvp" id="rsvp">
-      <h2>RSVP</h2>
-      <p class="intro">We can't wait to celebrate with you — please let us know below.</p>
-
-      <form id="rsvp-form" novalidate>
-        <!-- Step 1: attendance choice -->
-        <div class="field">
-          <span class="label">Will you be joining us?</span>
-          <div class="choice">
-            <label class="choice-btn">
-              <input type="radio" name="attending" value="yes" />
-              <span>Joyfully accept</span>
-            </label>
-            <label class="choice-btn">
-              <input type="radio" name="attending" value="no" />
-              <span>Regretfully decline</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Branch: joining -->
-        <div id="joining-fields" hidden>
-          <div class="field">
-            <label for="partySize">How many people are attending (including you)?</label>
-            <input type="number" id="partySize" name="partySize" min="1" step="1"
-                   inputmode="numeric" placeholder="e.g. 2" />
-          </div>
-          <div id="guest-names"></div>
-        </div>
-
-        <!-- Branch: declining -->
-        <div id="decline-fields" hidden>
-          <div class="field">
-            <span class="label">Your name</span>
-            <div class="name-row">
-              <input type="text" id="declineFirst" placeholder="First name" aria-label="First name" />
-              <input type="text" id="declineLast" placeholder="Last name" aria-label="Last name" />
-            </div>
-          </div>
-        </div>
-
-        <!-- Respondent email (both branches) -->
-        <div class="field" id="email-field" hidden>
-          <label for="email">Your email</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" />
-        </div>
-
-        <button class="btn" type="submit" id="submit-btn" hidden>RSVP now</button>
-        <div class="form-status" id="form-status"></div>
+        <p id="gate-error" class="gate-error" hidden>Hmm, that password isn't right — please check your invitation and try again.</p>
       </form>
+    </header>
+  </div>
 
-      <!-- Confirmation / thank-you state (shown after submitting) -->
-      <div class="thank-you" id="thank-you" hidden>
-        <h3 id="thank-you-title">Thank you!</h3>
-        <p id="thank-you-msg">Your RSVP has been received. 💛</p>
-      </div>
-    </section>
-
-  </main>
+  <!-- PROTECTED SITE — injected here only after the correct password is entered -->
+  <main id="app" class="wrap" hidden></main>
 
   <script>
-    /* ------------------------------------------------------------------
-       RSVP form logic.
+    /* ==================================================================
+       PASSWORD GATE
+       The wedding details are AES-256-GCM encrypted below. Nothing
+       readable (no address, date, etc.) exists in this file until the
+       correct invitation password unscrambles it in the browser.
+       To change the password later, just re-encrypt with a new one.
+    ================================================================== */
+    const CIPHER = {
+      salt: "LFBaDHrKcFsGzNN+bgsqdQ==",
+      iv:   "e4hZOWbVNrkXO2Sr",
+      ct:   "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",
+    };
 
-       Submissions are sent to a free Google Apps Script "web app" that
-       writes each RSVP into a Google Sheet you own, one row each:
+    const b64ToBytes = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+    async function decryptSite(pw) {
+      try {
+        const enc = new TextEncoder();
+        const km  = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+        const key = await crypto.subtle.deriveKey(
+          { name: "PBKDF2", salt: b64ToBytes(CIPHER.salt), iterations: 150000, hash: "SHA-256" },
+          km, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+        const ptBuf = await crypto.subtle.decrypt(
+          { name: "AES-GCM", iv: b64ToBytes(CIPHER.iv) }, key, b64ToBytes(CIPHER.ct));
+        return new TextDecoder().decode(ptBuf);
+      } catch (e) {
+        return null; // wrong password → authentication fails
+      }
+    }
+
+    const gate      = document.getElementById("gate");
+    const gateForm  = document.getElementById("gate-form");
+    const gatePw    = document.getElementById("gate-pw");
+    const gateError = document.getElementById("gate-error");
+    const appEl     = document.getElementById("app");
+
+    async function unlock(pw, remember) {
+      const html = await decryptSite(pw);
+      if (html === null) return false;
+      appEl.innerHTML = html;
+      appEl.hidden = false;
+      gate.hidden = true;
+      if (remember) { try { sessionStorage.setItem("wpw", pw); } catch (e) {} }
+      window.scrollTo(0, 0);
+      initRSVP();
+      return true;
+    }
+
+    gateForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      gateError.hidden = true;
+      const b = gateForm.querySelector("button");
+      const t = b.textContent;
+      b.disabled = true; b.textContent = "Checking…";
+      const ok = await unlock(gatePw.value.trim(), true);
+      if (!ok) { gateError.hidden = false; b.disabled = false; b.textContent = t; gatePw.select(); }
+    });
+
+    // Stay unlocked while navigating/refreshing during the same browser session.
+    (async () => {
+      let saved = null;
+      try { saved = sessionStorage.getItem("wpw"); } catch (e) {}
+      if (saved) { const ok = await unlock(saved, false); if (!ok) { try { sessionStorage.removeItem("wpw"); } catch (e) {} } }
+    })();
+
+    /* ==================================================================
+       RSVP form logic — runs only AFTER the site is unlocked & injected.
+       Each submission becomes one row in the Google Sheet:
          Timestamp | Attending | Party Size | Name(s) | Email
-
-       👉 SETUP: paste the web-app URL you get from Google between the
-          quotes below (replace PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE).
-          Until then, the form shows a friendly "not connected yet" note.
-    ------------------------------------------------------------------ */
+    ================================================================== */
+    function initRSVP() {
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdX1stSLIvR8LFbrQ9UhE7J24Pvbtn2umeHdHtwJ37exCDBl8d8NZ_xADt-0OwzwPL/exec";
     const MAX_GUESTS = 20; // safety guard so a huge number can't freeze the page
 
@@ -575,6 +585,7 @@
         btn.textContent = original;
       }
     });
+    } // end initRSVP()
   </script>
 </body>
 </html>
